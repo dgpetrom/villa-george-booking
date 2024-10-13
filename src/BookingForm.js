@@ -23,7 +23,7 @@ const BookingForm = () => {
         e.preventDefault();
 
         // Send a POST request to the backend
-        axios.post('https://villa-george-backend.onrender.com/api/bookings', {
+        axios.post('https://villa-george-bookings.onrender.com/api/bookings', {
             start_date: formData.startDate,
             end_date: formData.endDate,
             name: formData.name,
