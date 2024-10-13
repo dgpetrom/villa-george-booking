@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Use `useNavigate` instead of `useHistory`
 
 const BookingForm = () => {
     const [formData, setFormData] = useState({
@@ -10,8 +9,8 @@ const BookingForm = () => {
         endDate: ''
     });
     const [status, setStatus] = useState('');
-    const navigate = useNavigate(); // Use `useNavigate`
 
+    // Handle form data changes
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -19,9 +18,11 @@ const BookingForm = () => {
         });
     };
 
+    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        // Send a POST request to the backend
         axios.post('https://villa-george-bookings.onrender.com/api/bookings', {
             start_date: formData.startDate,
             end_date: formData.endDate,
@@ -30,8 +31,6 @@ const BookingForm = () => {
         })
         .then(response => {
             setStatus('Booking successful!');
-            // Use `navigate` to redirect to the calendar page
-            navigate('/calendar');
         })
         .catch(error => {
             setStatus('Error submitting booking.');
