@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from React Router v6
 
 const BookingForm = () => {
     const [formData, setFormData] = useState({
@@ -9,8 +10,9 @@ const BookingForm = () => {
         endDate: ''
     });
     const [status, setStatus] = useState('');
+    const navigate = useNavigate(); // Initialize useNavigate for programmatic navigation
 
-    // Handle form data changes
+    // Handle form input changes
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -22,7 +24,7 @@ const BookingForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Send a POST request to the backend
+        // Make a POST request to the backend API to submit booking data
         axios.post('https://villa-george-bookings.onrender.com/api/bookings', {
             start_date: formData.startDate,
             end_date: formData.endDate,
@@ -30,10 +32,13 @@ const BookingForm = () => {
             email: formData.email
         })
         .then(response => {
-            setStatus('Booking successful!');
+            setStatus('Booking successful!'); // Show success message
+
+            // Redirect to the calendar page after successful booking
+            navigate('/calendar'); // Use navigate to redirect
         })
         .catch(error => {
-            setStatus('Error submitting booking.');
+            setStatus('Error submitting booking.'); // Show error message
             console.error('Error:', error);
         });
     };
@@ -84,7 +89,7 @@ const BookingForm = () => {
                 </div>
                 <button type="submit">Submit Booking</button>
             </form>
-            {status && <p>{status}</p>}
+            {status && <p>{status}</p>} {/* Show status message */}
         </div>
     );
 };
