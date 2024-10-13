@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom'; // If using React Router for navigation
+import { useNavigate } from 'react-router-dom'; // Use `useNavigate` instead of `useHistory`
 
 const BookingForm = () => {
     const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ const BookingForm = () => {
         endDate: ''
     });
     const [status, setStatus] = useState('');
-    const history = useHistory(); // For navigation after booking
+    const navigate = useNavigate(); // Use `useNavigate`
 
     const handleChange = (e) => {
         setFormData({
@@ -30,9 +30,8 @@ const BookingForm = () => {
         })
         .then(response => {
             setStatus('Booking successful!');
-
-            // Redirect to the Villa George calendar page after booking
-            history.push('/calendar'); // Assuming "/calendar" is your calendar page route
+            // Use `navigate` to redirect to the calendar page
+            navigate('/calendar');
         })
         .catch(error => {
             setStatus('Error submitting booking.');
