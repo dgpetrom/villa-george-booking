@@ -32,7 +32,7 @@ const BookingForm = () => {
 
             // Redirect to the static booking page after successful booking
             setTimeout(() => {
-                window.location.href = 'https://dgpetrom.github.io/villa-george/booking.html';
+                window.location.href = 'https://dgpetrom.github.io/VillaGeorge/booking.html';
             }, 2000); // Delay to show success message before redirecting
         })
         .catch(error => {
