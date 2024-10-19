@@ -18,11 +18,9 @@ const BookingForm = () => {
         });
     };
 
-    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Send a POST request to the backend
         axios.post('https://villa-george-bookings.onrender.com/api/bookings', {
             start_date: formData.startDate,
             end_date: formData.endDate,
@@ -31,6 +29,11 @@ const BookingForm = () => {
         })
         .then(response => {
             setStatus('Booking successful!');
+
+            // Redirect to the static booking page after successful booking
+            setTimeout(() => {
+                window.location.href = 'https://dgpetrom.github.io/villa-george/booking.html';
+            }, 2000); // Delay to show success message before redirecting
         })
         .catch(error => {
             setStatus('Error submitting booking.');
