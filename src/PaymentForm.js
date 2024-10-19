@@ -2,11 +2,24 @@ import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
 
-const PaymentForm = ({ amount, currency, onPaymentSuccess }) => {
+const PaymentForm = ({ amount, onPaymentSuccess }) => {
     const stripe = useStripe();
     const elements = useElements();
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        currency: 'usd' // default currency
+    });
     const [errorMessage, setErrorMessage] = useState(null);
     const [processing, setProcessing] = useState(false);
+
+    // Handle input changes
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,7 +34,10 @@ const PaymentForm = ({ amount, currency, onPaymentSuccess }) => {
         // Create a payment method and send it to the backend
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
-            card: cardElement
+            card: cardElement,
+            billing_details: {
+                name: `${formData.firstName} ${formData.lastName}`
+            }
         });
 
         if (error) {
@@ -31,11 +47,13 @@ const PaymentForm = ({ amount, currency, onPaymentSuccess }) => {
         }
 
         try {
-            // Send the payment method to the backend to create and confirm payment intent
-            const response = await axios.post('https://https://villa-george-bookings.onrender.com/api/payment', {
+            // Send the payment method and additional data to the backend
+            const response = await axios.post('https://villa-george-bookings.onrender.com/api/payment', {
                 amount,
-                currency,
-                payment_method: paymentMethod.id
+                currency: formData.currency,
+                payment_method: paymentMethod.id,
+                first_name: formData.firstName,
+                last_name: formData.lastName
             });
 
             if (response.data.success) {
@@ -52,6 +70,34 @@ const PaymentForm = ({ amount, currency, onPaymentSuccess }) => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <div>
+                <label>First Name</label>
+                <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div>
+                <label>Last Name</label>
+                <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div>
+                <label>Currency</label>
+                <select name="currency" value={formData.currency} onChange={handleChange} required>
+                    <option value="usd">USD</option>
+                    <option value="eur">EUR</option>
+                    <option value="gbp">GBP</option>
+                </select>
+            </div>
             <CardElement />
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
             <button type="submit" disabled={!stripe || processing}>
