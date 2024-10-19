@@ -1,38 +1,38 @@
 .booking-form {
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  max-width: 600px;
-  background-color: #f9f9f9;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-width: 600px;
+    background-color: #f9f9f9;
 }
 
 .booking-form form div {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .booking-form label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .booking-form input {
-  padding: 8px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    padding: 8px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .booking-form button {
-  padding: 10px 20px;
-  background-color: #0071c2;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+    padding: 10px 20px;
+    background-color: #0071c2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .booking-form button:hover {
-  background-color: #005dab;
+    background-color: #005dab;
 }
