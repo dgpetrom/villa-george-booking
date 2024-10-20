@@ -48,7 +48,7 @@ const PaymentForm = ({ amount, onPaymentSuccess }) => {
 
         try {
             // Send the payment method and additional data to the backend
-            const response = await axios.post('https://villa-george-bookings.onrender.com/api/payment', {
+            const response = await axios.post('https://villa-george-bookings.onrender.com/api/bookings', {
                 amount,
                 currency: formData.currency,
                 payment_method: paymentMethod.id,
